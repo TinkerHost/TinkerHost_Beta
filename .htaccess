@@ -1,0 +1,34 @@
+php_value display_errors Off
+php_value mbstring.http_input auto
+php_value date.timezone America/New_York
+RewriteEngine On
+RewriteRule ^path/?$ https://beta.tinkerhost.net
+
+
+#Not allow directory pages
+IndexIgnore * 
+Options -Indexes
+
+Options FollowSymLinks MultiViews
+
+RewriteEngine On
+
+RewriteBase /
+
+RewriteCond %{HTTP:X-Forwarded-Proto} =http
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1%{REQUEST_URI} [R=301,QSA,NC,L]
+ 
+
+ErrorDocument 400 https://tinkerhost.net/error/400
+ErrorDocument 401 https://tinkerhost.net/error/401
+ErrorDocument 403 https://tinkerhost.net/error/403
+ErrorDocument 404 https://tinkerhost.net/error/404
+ErrorDocument 408 https://tinkerhost.net/error/408
+ErrorDocument 429 https://tinkerhost.net/error/429
+ErrorDocument 500 https://tinkerhost.net/error/500
+ErrorDocument 502 https://tinkerhost.net/error/502
+ErrorDocument 503 https://tinkerhost.net/error/503
